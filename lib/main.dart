@@ -1,5 +1,6 @@
-import 'dart:ffi';
+import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -111,7 +112,6 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.center,
                       child: Row(
                         children: [
-                          //TODO : add image of the language
                           DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
                               isDense: true,
@@ -152,8 +152,6 @@ class _HomePageState extends State<HomePage> {
                       alignment: Alignment.center,
                       child: Row(
                         children: [
-                          //TODO : add image of the language
-
                           DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
                               iconSize: 0.00,
@@ -211,8 +209,7 @@ class _HomePageState extends State<HomePage> {
                         right: 0,
                         bottom: 0,
                         child: ElevatedButton(
-                          //Todo : add function to access api
-                          onPressed: () => {},
+                          onPressed: () => {_translateMessage(_clientMessage.text)},
                           style: const ButtonStyle(
                             backgroundColor: MaterialStatePropertyAll(Color(0xFFFBC490)),
                           ),
@@ -281,8 +278,8 @@ class _HomePageState extends State<HomePage> {
                             })
                           },
                           style: const ButtonStyle(
-                            elevation: MaterialStatePropertyAll(0),
-                            backgroundColor: MaterialStatePropertyAll(Colors.transparent),
+                            elevation: WidgetStatePropertyAll(0),
+                            backgroundColor: WidgetStatePropertyAll(Colors.transparent),
                           ),
                           child: Row(
                             children: [
@@ -318,6 +315,32 @@ class _HomePageState extends State<HomePage> {
         await launchUrl(uri);
     } catch (e) {
       print('Error launching URL: $e');
+    }
+  }
+
+  Future<void> _translateMessage(String message) async {
+    try {
+      var url = Uri.parse("https://transilate-api.netlify.app/.netlify/functions/api/translate");
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'langFrom': _language1.toString(),
+          'langTo': _language2.toString(),
+          'msg': message,
+        }),
+      );
+      if (response.statusCode == 200) {
+        print("Response: ${response.body}");
+        var jsonResponse = jsonDecode(response.body);
+        print("Response");
+        print(jsonResponse['msg']);
+        _serverMessage.text = jsonResponse['msg'];
+      }
+    } catch (err) {
+      print(err);
     }
   }
 
