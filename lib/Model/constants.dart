@@ -1,5 +1,7 @@
-class LanguageList {
-  final Map<String, String> languageCodes = {
+class Constants {
+
+  //Language map
+  static const Map<String, String> languageCodes = {
     "Afrikaans": "af",
     "Albanian": "sq",
     "Amharic": "am",
@@ -112,4 +114,18 @@ class LanguageList {
     "Auto" : "auto",
   };
 
+  //initial language state
+  static const clientLanguage = "auto";
+  static const serverLanguage = "en";
+
+  //Urls
+  static const baseUrl = "https://transilate-api.netlify.app/.netlify/functions/api/translate";
+  static const buyMeCoffee = 'https://buymeacoffee.com/sandusans';
+
+  //AppConstants
+  static const String  translate = "Translate";
+  static const String  translator = "Translator";
+  static const String  copy = "Copy";
+  static const String doneBy = "Done by : ";
+  static const String author = "Sandhana Krishnan";
 }
