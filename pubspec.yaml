@@ -40,6 +40,7 @@ dependencies:
   flag: ^7.0.0
   clipboard: ^0.1.3
   http: ^1.1.1
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
      - assets/images/transfer.svg
      - assets/images/copy.svg
      - assets/images/languageUni.svg
+     - assets/images/splash_logo.png
   fonts:
     - family: poppins
       fonts:
@@ -99,3 +101,15 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+flutter_native_splash:
+  color: "#0A5EAD"
+  image: assets/images/splash_logo.png
+  android: true
+  ios: true
+  android_12:
+    color: "#0A5EAD"
+    image: assets/images/splash_logo.png
+  web: false
+
